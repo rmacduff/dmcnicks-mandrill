@@ -1,41 +1,57 @@
 # == Class: mandrill
 #
-# Full description of class mandrill here.
+# Configures mail service to use Mandrill as a smarthost.
 #
 # === Parameters
 #
-# Document parameters here.
+# [*mda*]
+#   The name of the mail delivery agent installed on the host. This
+#   module will try to make a sensible guess for this based on OS family.
+# [*mda_service*]
+#   The specific service name of the mail delivery agent. As above, this
+#   will be set based on OS family.
+# [*mail_domain*]
+#   The mail domain that the host should use for sender addresses. Defaults
+#   to the host FQDN.
+# [*username*]
+#   (Required) Mandrill username.
+# [*apikey*]
+#   (Required) Mandrill API key created inside your Mandrill account.
+#   
+# === Supported Platforms
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
+# * Debian
+# * Ubuntu
+# * RedHat Enterprise Linux, CentOS, Scientific Linux
 #
 # === Examples
 #
-#  class { 'mandrill':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#  class { "mandrill":
+#    username => "registered@email.address",
+#    apikey => "7vk6YiOxfzVdTmtRQShR3"
 #  }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# David McNicol <david@mcnicks.org>
 #
 # === Copyright
 #
-# Copyright 2014 Your name here, unless otherwise noted.
+# Copyright 2014 David McNicol
 #
-class mandrill {
+class mandrill (
+    $mda = $mandrill::params::mda,
+    $mda_service = $mandrill::params::mda_service,
+    $mail_domain = $mandrill::params::mail_domain,
+    $username,
+    $apikey
+) inherits mandrill::params {
 
-
+    class { "mandrill::config":
+        mda => $mda,
+        mda_service => $mda_service,
+        mail_domain => $mail_domain,
+        username => $username,
+        apikey => $apikey
+    }
 }

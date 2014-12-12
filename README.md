@@ -74,11 +74,6 @@ and service name:
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
-
-## Reference
-
 ####Class: `mandrill`
 
 The module's primary class. 

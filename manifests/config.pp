@@ -14,18 +14,23 @@
 class mandrill::config (
     $mda,
     $mda_service,
+    $mail_domain,
     $username,
     $apikey
 ) {
 
-    if defined(Class["mandrill::config::$mda"]) {
-        class { "mandrill::config::$mda":
-            mda => $mda,
-            mda_service => $mda_service,
-            username => $username,
-            apikey => $apikey
+    case $mda {
+        "exim", "postfix", "sendmail": {
+            class { "mandrill::config::$mda":
+                mda => $mda,
+                mda_service => $mda_service,
+                mail_domain => $mail_domain,
+                username => $username,
+                apikey => $apikey
+            }
         }
-    } else {
-        fail("mandrill module does not support MDA $mda")
+        default: {
+            fail("mandrill module does not support MDA $mda")
+        }
     }
 }

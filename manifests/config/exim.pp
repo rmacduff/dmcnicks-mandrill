@@ -18,7 +18,7 @@ class mandrill::config::exim (
     $apikey
 ) {
     
-    service { "exim4":
+    service { $mda_service:
         ensure => "running"
     }
 
@@ -28,7 +28,7 @@ class mandrill::config::exim (
         owner => "root",
         group => "root",
         mode => 0644,
-        content => $local_domain
+        content => $mail_domain
     }
 
     file { "update-exim4.conf.conf":
@@ -52,5 +52,5 @@ class mandrill::config::exim (
     File["mailname"] ->
     File["update-exim4.conf.conf"] ->
     File["passwd.client"] ->
-    Service["exim4"]
+    Service[$mda_service]
 }

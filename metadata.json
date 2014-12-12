@@ -4,9 +4,9 @@
   "author": "dmcnicks",
   "summary": "Configures mail service to use Mandrill as a smarthost.",
   "license": "Apache 2.0",
-  "source": "https://github.com/dmcnicks/mandrill.git",
-  "project_page": "https://github.com/dmcnicks/mandrill",
-  "issues_url": "https://github.com/dmcnicks/mandrill/issues",
+  "source": "https://github.com/dmcnicks/dmcnicks-mandrill.git",
+  "project_page": "https://github.com/dmcnicks/dmcnicks-mandrill",
+  "issues_url": "https://github.com/dmcnicks/dmcnicks-mandrill/issues",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
   ]

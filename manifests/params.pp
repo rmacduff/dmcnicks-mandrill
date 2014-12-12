@@ -30,7 +30,8 @@ class mandrill::params () {
             $mda_service = "sendmail"
         }
         default: {
-            fail("mandrill module does not support OS family ${::osfamily}")
+            $mda = "none"
+            $mda_service = "none"
         }
     }
 

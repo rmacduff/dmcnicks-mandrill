@@ -80,7 +80,7 @@ class mandrill::config::postfix (
     file { "sasl_passwd":
         path => "/etc/postfix/sasl_passwd",
         ensure => "present",
-        content => template("mandrill/postfix/sasl_passwd")
+        content => template("mandrill/postfix/sasl_passwd.erb")
     }
 
     exec { "sasl_passwd.db":

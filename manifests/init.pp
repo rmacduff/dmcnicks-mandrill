@@ -8,8 +8,8 @@
 #   The name of the mail delivery agent installed on the host. This
 #   module will try to make a sensible guess for this based on OS family.
 # [*mda_service*]
-#   The specific service name of the mail delivery agent. As above, this
-#   will be set based on OS family.
+#   The OS-specific service name of the mail delivery agent. As with the mda
+#   parameter, this will be set based on OS family.
 # [*mail_domain*]
 #   The mail domain that the host should use for sender addresses. Defaults
 #   to the host FQDN.

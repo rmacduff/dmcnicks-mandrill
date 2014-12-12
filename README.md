@@ -15,41 +15,62 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Configures the mail service on a node to use Mandrill as a smarthost.
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+Mandrill is a cloud-based email infrastructure service that can be used to
+deliver outgoing email from servers. This module configures the Mail Delivery
+Agent on nodes to use Mandrill as a smarthost. It makes a reasonable guess
+about the currently installed MDA based on OS family defaults, but a specific
+MDA can be set as a parameter.
 
 ## Setup
 
 ### What mandrill affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
-
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+* Configuration files associated with the specified / guessed MDA.
+* Configures the specified / guessed MDA service to start.
 
 ### Beginning with mandrill
 
-The very basic steps needed for a user to get the module up and running.
+Before you can use this module you will have to register with Mandrill. Free
+accounts support 250 emails per day and 12000 emails per month. You will also
+need to generate an API key in Settings > API Keys > New API Key.
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+The most basic class declaration requires a username and API key.
+
+```puppet
+    class { "mandrill":
+        username => "registered@email.address",
+        apikey => "7vk6YiOxfzVdTmtRQShR3"
+    }
+```
+
+This will guess which MDA to configure based on the OS family of the node and
+configure the mail domain of the node to be the node FQDN. You can specify
+a mail domain:
+
+```puppet
+    class { "mandrill":
+        username => "registered@email.address",
+        apikey => "7vk6YiOxfzVdTmtRQShR3",
+        mail_domain => "mydomain.org"
+    }
+```
+
+If you wish to configure a specific MDA you will have to specify the MDA name
+and service name:
+
+```puppet
+    class { "mandrill":
+        username => "registered@email.address",
+        apikey => "7vk6YiOxfzVdTmtRQShR3",
+        mail_domain => "mydomain.org",
+        mda => "sendmail",
+        mda_service => "sendmail"
+    }
+```
 
 ## Usage
 
@@ -58,22 +79,41 @@ the fancy stuff with your module here.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+####Class: `mandrill`
+
+The module's primary class. 
+
+**Parameters within `mandrill`:**
+
+#####`username`
+
+(Required) Mandrill username.
+
+#####`apikey`
+
+(Required) Mandrill API key.
+
+#####`mail_domain`
+
+The mail domain that the host should use for sender addresses. Defaults
+to the host FQDN.
+
+#####`mda`
+
+The name of the Mail Delivery Agent installed on the host. The module will
+try to make a sensible guess for this parameter based on OS family.
+
+#####`mda_service`
+
+The OS-specific service name for the Mail Delivery Agent. As with the `mda`
+parameter, this will be set based on OS family.
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+This module only supports exim, postfix and sendmail and only automatically
+guesses the MDA for Debian, Ubuntu, RedHat Enterprise Linux, CentOS and
+Scientific Linux.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+Happy to receive pull requests.

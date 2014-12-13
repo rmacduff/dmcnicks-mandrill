@@ -6,10 +6,7 @@
 #
 # [*mailer*]
 #   The name of the mail software installed on the host. This module will try
-#   to make a sensible guess for this based on OS family.
-# [*mailer_service*]
-#   The OS-specific service name of the mailer software. As with the mailer
-#   parameter, this will be set based on OS family.
+#   to make a sensible guess for this based on operating system.
 # [*mail_domain*]
 #   The mail domain that the host should use for sender addresses. Defaults
 #   to the host FQDN.
@@ -17,6 +14,9 @@
 #   (Required) Mandrill username.
 # [*apikey*]
 #   (Required) Mandrill API key created inside your Mandrill account.
+# [*required_packages*]
+#   List of required packages, set by params.pp if any additional packages
+#   are required for the smarthost functionality to work.
 #   
 # === Supported Platforms
 #
@@ -41,16 +41,16 @@
 #
 class mandrill (
     $mailer = $mandrill::params::mailer,
-    $mailer_service = $mandrill::params::mailer_service,
     $mail_domain = $mandrill::params::mail_domain,
+    $required_packages = $mandrill::params::required_packages,
     $username,
     $apikey
 ) inherits mandrill::params {
 
     class { "mandrill::config":
         mailer => $mailer,
-        mailer_service => $mailer_service,
         mail_domain => $mail_domain,
+        required_packages => $required_packages,
         username => $username,
         apikey => $apikey
     }

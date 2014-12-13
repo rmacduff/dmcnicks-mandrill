@@ -14,24 +14,40 @@
 #
 class mandrill::config (
     $mailer,
-    $mailer_service,
     $mail_domain,
+    $required_packages,
     $username,
     $apikey
 ) {
 
+    # Work out whether we have a specific configuration that works for
+    # the given mailer and operating system.
+
     case $mailer {
-        "exim", "postfix", "sendmail": {
-            class { "mandrill::config::$mailer":
-                mailer => $mailer,
-                mailer_service => $mailer_service,
-                mail_domain => $mail_domain,
-                username => $username,
-                apikey => $apikey
+        "postfix": { $mailer_config = "postfix" }
+        "exim": {
+            case $::osfamily {
+                "Debian": { $mailer_config = "exim_debian" }
             }
         }
-        default: {
-            fail("mandrill module does not support mailer $mailer")
+        "sendmail": {
+            case $::osfamily {
+                "Debian": { $mailer_config = "sendmail_debian" }
+                "RedHat": { $mailer_config = "sendmail_redhat" }
+            }
         }
+    }
+
+    # Apply the configuration if one has been found.
+
+    if $mailer_config {
+        class { "mandrill::config::$mailer_config":
+            mail_domain => $mail_domain,
+            required_packages => $required_packages,
+            username => $username,
+            apikey => $apikey
+        }
+    } else {
+        fail("mandrill module does not support $mailer on $::osfamily")
     }
 }

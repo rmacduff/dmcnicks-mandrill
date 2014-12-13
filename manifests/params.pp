@@ -15,23 +15,34 @@ class mandrill::params () {
     # Set mail domain to FQDN by default.
     $mail_domain = $::fqdn
 
-    # Set the mailer and mailer service based on the OS family.
+    # Set the mailer and mailer service based on the OS.
+
     case $::osfamily {
         "Debian": {
-            $mailer = "exim"
-            $mailer_service = "exim4"
+            $required_packages = [
+                "sasl2-bin",
+                "libsasl2-2",
+                "libsasl2-modules"
+            ]
+            case $::operatingsystem {
+                "Debian": {
+                    $mailer = "exim"
+                }
+                "Ubuntu": {
+                    $mailer = "postfix"
+                }
+            }
         }
-        "Ubuntu": {
+        "RedHat": {
             $mailer = "postfix"
-            $mailer_service = "postfix"
-        }
-        "RedHat", "CentOS", "Scientific": {
-            $mailer = "postfix"
-            $mailer_service = "postfix"
+            $required_packages = [
+                "cyrus-sasl",
+                "cyrus-sasl-plain",
+                "cyrus-sasl-md5"
+            ]
         }
         default: {
             $mailer = "none"
-            $mailer_service = "none"
         }
     }
 

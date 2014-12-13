@@ -15,22 +15,25 @@
 
 ## Overview
 
-Configures the mail service on a node to use Mandrill as a smarthost.
+Configures an existing mail service on a node to use Mandrill as a smarthost.
 
 ## Module Description
 
 Mandrill is a cloud-based email infrastructure service that can be used to
 deliver outgoing email from servers. This module configures the mailer
 software on nodes to use Mandrill as a smarthost. It makes a reasonable guess
-about the currently installed mailer based on OS family defaults, but a specific
-mailer can be set as a parameter.
+about the currently installed mailer based on operating system defaults, but a
+specific mailer can be set as a parameter.
+
+
+*Note that this module does not install a mail service.*
 
 ## Setup
 
 ### What mandrill affects
 
 * Configuration files associated with the specified / guessed mailer.
-* Configures the specified / guessed mailer service to start.
+* Restarts the specified / guessed mailer.
 
 ### Beginning with mandrill
 
@@ -47,9 +50,9 @@ The most basic class declaration requires a username and API key.
     }
 ```
 
-This will guess which mailer to configure based on the OS family of the node and
-configure the mail domain of the node to be the node FQDN. You can specify
-a mail domain:
+This will guess which mailer to configure based on the operating system of the
+node and configure the mail domain of the node to be the node FQDN. You can
+specify a mail domain:
 
 ```puppet
     class { "mandrill":
@@ -59,8 +62,7 @@ a mail domain:
     }
 ```
 
-If you wish to configure a specific mailer you will have to specify the MDA name
-and service name:
+You can specify a mailer if you know what is running on the node:
 
 ```puppet
     class { "mandrill":
@@ -68,7 +70,6 @@ and service name:
         apikey => "7vk6YiOxfzVdTmtRQShR3",
         mail_domain => "mydomain.org",
         mailer => "sendmail",
-        mailer_service => "sendmail"
     }
 ```
 
@@ -96,19 +97,24 @@ to the host FQDN.
 #####`mailer`
 
 The name of the mail software installed on the host. The module will
-try to make a sensible guess for this parameter based on OS family.
-
-#####`mailer_service`
-
-The OS-specific service name for the mailer software. As with the `mailer`
-parameter, this will be set based on OS family.
+try to make a sensible guess for this parameter based on operating
+system.
 
 ## Limitations
 
-This module only supports exim, postfix and sendmail and only automatically
-guesses the mailer for Debian, Ubuntu, RedHat Enterprise Linux, CentOS and
-Scientific Linux.
+This module supports exim, postfix and sendmail mailers and will guess
+which mailer to use for Debian, Ubuntu and RedHat derivatives. If you
+know the mailer you are using, specify it in the mandrill class
+definition.
+
+This module has been tested with:
+
+* Exim, Postfix and Sendmail on Debian and Ubuntu.
+* Postfix and Sendmail on CentOS.
+
+There may be incompatibilities with other OS versions, packages and
+configurations.
 
 ## Development
 
-Happy to receive pull requests.
+I am happy to receive pull requests. 

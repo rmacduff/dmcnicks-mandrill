@@ -38,8 +38,8 @@ specific mailer can be set as a parameter.
 ### Beginning with mandrill
 
 Before you can use this module you will have to register with Mandrill. Free
-accounts support 250 emails per day and 12000 emails per month. You will also
-need to generate an API key in Settings > API Keys > New API Key.
+accounts support up to 250 emails per hour and 12000 emails per month.
+You will also need to generate an API key in Settings > API Keys > New API Key.
 
 The most basic class declaration requires a username and API key.
 

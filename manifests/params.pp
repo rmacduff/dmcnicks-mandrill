@@ -26,8 +26,8 @@ class mandrill::params () {
             $mda_service = "postfix"
         }
         "RedHat", "CentOS", "Scientific": {
-            $mda = "sendmail"
-            $mda_service = "sendmail"
+            $mda = "postfix"
+            $mda_service = "postfix"
         }
         default: {
             $mda = "none"

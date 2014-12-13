@@ -62,7 +62,7 @@ specify a mail domain:
     }
 ```
 
-You can specify a mailer if you know what is running on the node:
+And you can specify a mailer if you know what is running on the node:
 
 ```puppet
     class { "mandrill":

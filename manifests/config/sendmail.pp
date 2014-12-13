@@ -17,6 +17,36 @@ class mandrill::config::sendmail (
     $username,
     $apikey
 ) {
-    fail("mandrill module does not support MDA sendmail")
 
+    file { "authinfo":
+        path => "/etc/mail/authinfo",
+        ensure => "present",
+        content => template("mandrill/sendmail/authinfo.erb")
+    } ->
+
+    file { "sendmail.mc":
+        path => "/etc/mail/sendmail.mc",
+        ensure => "present"
+    } ->
+
+    file_line { "smart_host":
+        path => "/etc/mail/sendmail.mc",
+        line => "define(`SMART_HOST', `smtp.mandrillapp.com')dnl",
+        match => "^define\\(`SMART_HOST'"
+    } ->
+
+    file_line { "authinfo":
+        path => "/etc/mail/sendmail.mc",
+        line => "FEATURE(`authinfo')dnl"
+    } ->
+   
+    exec { "make":
+        path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ],
+        command => "make",
+        cwd => "/etc/mail"
+    } ->
+
+    service { $mda_service:
+        ensure => "running"
+    }
 }

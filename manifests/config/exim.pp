@@ -11,14 +11,14 @@
 # Copyright 2014 David McNicol
 #
 class mandrill::config::exim (
-    $mda,
-    $mda_service,
+    $mailer,
+    $mailer_service,
     $mail_domain,
     $username,
     $apikey
 ) {
     
-    service { $mda_service:
+    service { $mailer_service:
         ensure => "running"
     }
 
@@ -52,5 +52,5 @@ class mandrill::config::exim (
     File["mailname"] ->
     File["update-exim4.conf.conf"] ->
     File["passwd.client"] ->
-    Service[$mda_service]
+    Service[$mailer_service]
 }

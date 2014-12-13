@@ -15,23 +15,23 @@ class mandrill::params () {
     # Set mail domain to FQDN by default.
     $mail_domain = $::fqdn
 
-    # Set the MDA and MDA service based on the OS family.
+    # Set the mailer and mailer service based on the OS family.
     case $::osfamily {
         "Debian": {
-            $mda = "exim"
-            $mda_service = "exim4"
+            $mailer = "exim"
+            $mailer_service = "exim4"
         }
         "Ubuntu": {
-            $mda = "postfix"
-            $mda_service = "postfix"
+            $mailer = "postfix"
+            $mailer_service = "postfix"
         }
         "RedHat", "CentOS", "Scientific": {
-            $mda = "postfix"
-            $mda_service = "postfix"
+            $mailer = "postfix"
+            $mailer_service = "postfix"
         }
         default: {
-            $mda = "none"
-            $mda_service = "none"
+            $mailer = "none"
+            $mailer_service = "none"
         }
     }
 

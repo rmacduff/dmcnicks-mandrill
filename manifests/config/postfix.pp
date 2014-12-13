@@ -11,8 +11,8 @@
 # Copyright 2014 David McNicol
 #
 class mandrill::config::postfix (
-    $mda,
-    $mda_service,
+    $mailer,
+    $mailer_service,
     $mail_domain,
     $username,
     $apikey
@@ -62,7 +62,7 @@ class mandrill::config::postfix (
         command => "postconf -e 'smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt'"
     }
 
-    service { $mda_service:
+    service { $mailer_service:
         ensure => "running",
         require => [
             Exec["inet_interfaces"],

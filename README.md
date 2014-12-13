@@ -20,17 +20,17 @@ Configures the mail service on a node to use Mandrill as a smarthost.
 ## Module Description
 
 Mandrill is a cloud-based email infrastructure service that can be used to
-deliver outgoing email from servers. This module configures the Mail Delivery
-Agent on nodes to use Mandrill as a smarthost. It makes a reasonable guess
-about the currently installed MDA based on OS family defaults, but a specific
-MDA can be set as a parameter.
+deliver outgoing email from servers. This module configures the mailer
+software on nodes to use Mandrill as a smarthost. It makes a reasonable guess
+about the currently installed mailer based on OS family defaults, but a specific
+mailer can be set as a parameter.
 
 ## Setup
 
 ### What mandrill affects
 
-* Configuration files associated with the specified / guessed MDA.
-* Configures the specified / guessed MDA service to start.
+* Configuration files associated with the specified / guessed mailer.
+* Configures the specified / guessed mailer service to start.
 
 ### Beginning with mandrill
 
@@ -47,7 +47,7 @@ The most basic class declaration requires a username and API key.
     }
 ```
 
-This will guess which MDA to configure based on the OS family of the node and
+This will guess which mailer to configure based on the OS family of the node and
 configure the mail domain of the node to be the node FQDN. You can specify
 a mail domain:
 
@@ -59,7 +59,7 @@ a mail domain:
     }
 ```
 
-If you wish to configure a specific MDA you will have to specify the MDA name
+If you wish to configure a specific mailer you will have to specify the MDA name
 and service name:
 
 ```puppet
@@ -67,8 +67,8 @@ and service name:
         username => "registered@email.address",
         apikey => "7vk6YiOxfzVdTmtRQShR3",
         mail_domain => "mydomain.org",
-        mda => "sendmail",
-        mda_service => "sendmail"
+        mailer => "sendmail",
+        mailer_service => "sendmail"
     }
 ```
 
@@ -93,20 +93,20 @@ The module's primary class.
 The mail domain that the host should use for sender addresses. Defaults
 to the host FQDN.
 
-#####`mda`
+#####`mailer`
 
-The name of the Mail Delivery Agent installed on the host. The module will
+The name of the mail software installed on the host. The module will
 try to make a sensible guess for this parameter based on OS family.
 
-#####`mda_service`
+#####`mailer_service`
 
-The OS-specific service name for the Mail Delivery Agent. As with the `mda`
+The OS-specific service name for the mailer software. As with the `mailer`
 parameter, this will be set based on OS family.
 
 ## Limitations
 
 This module only supports exim, postfix and sendmail and only automatically
-guesses the MDA for Debian, Ubuntu, RedHat Enterprise Linux, CentOS and
+guesses the mailer for Debian, Ubuntu, RedHat Enterprise Linux, CentOS and
 Scientific Linux.
 
 ## Development

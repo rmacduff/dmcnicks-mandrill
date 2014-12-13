@@ -4,11 +4,11 @@
 #
 # === Parameters
 #
-# [*mda*]
-#   The name of the mail delivery agent installed on the host. This
-#   module will try to make a sensible guess for this based on OS family.
-# [*mda_service*]
-#   The OS-specific service name of the mail delivery agent. As with the mda
+# [*mailer*]
+#   The name of the mail software installed on the host. This module will try
+#   to make a sensible guess for this based on OS family.
+# [*mailer_service*]
+#   The OS-specific service name of the mailer software. As with the mailer
 #   parameter, this will be set based on OS family.
 # [*mail_domain*]
 #   The mail domain that the host should use for sender addresses. Defaults
@@ -40,16 +40,16 @@
 # Copyright 2014 David McNicol
 #
 class mandrill (
-    $mda = $mandrill::params::mda,
-    $mda_service = $mandrill::params::mda_service,
+    $mailer = $mandrill::params::mailer,
+    $mailer_service = $mandrill::params::mailer_service,
     $mail_domain = $mandrill::params::mail_domain,
     $username,
     $apikey
 ) inherits mandrill::params {
 
     class { "mandrill::config":
-        mda => $mda,
-        mda_service => $mda_service,
+        mailer => $mailer,
+        mailer_service => $mailer_service,
         mail_domain => $mail_domain,
         username => $username,
         apikey => $apikey

@@ -11,8 +11,8 @@
 # Copyright 2014 David McNicol
 #
 class mandrill::config::sendmail (
-    $mda,
-    $mda_service,
+    $mailer,
+    $mailer_service,
     $mail_domain,
     $username,
     $apikey
@@ -46,7 +46,7 @@ class mandrill::config::sendmail (
         cwd => "/etc/mail"
     } ->
 
-    service { $mda_service:
+    service { $mailer_service:
         ensure => "running"
     }
 }

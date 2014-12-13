@@ -13,6 +13,7 @@
 class mandrill::params () {
 
     # Set mail domain to FQDN by default.
+
     $mail_domain = $::fqdn
 
     # Set the mailer and mailer service based on the OS.

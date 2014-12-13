@@ -12,17 +12,9 @@
 #
 class mandrill::config::postfix (
     $mail_domain,
-    $required_packages,
     $username,
     $apikey
 ) {
-
-    if $required_packages {
-        package { $required_packages:
-            ensure => "installed",
-            before => Service["postfix"]
-        } 
-    }
 
     exec { "inet_interfaces":
         path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ],

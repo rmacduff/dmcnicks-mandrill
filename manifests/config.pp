@@ -43,7 +43,6 @@ class mandrill::config (
     if $mailer_config {
         class { "mandrill::config::$mailer_config":
             mail_domain => $mail_domain,
-            required_packages => $required_packages,
             username => $username,
             apikey => $apikey
         }

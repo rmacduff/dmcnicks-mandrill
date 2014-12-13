@@ -12,17 +12,9 @@
 #
 class mandrill::config::sendmail_debian (
     $mail_domain,
-    $required_packages,
     $username,
     $apikey
 ) {
-
-    if $required_packages {
-        package { $required_packages:
-            ensure => "installed",
-            before => File["authinfo"]
-        }
-    }
 
     file { "authinfo":
         path => "/etc/mail/authinfo",

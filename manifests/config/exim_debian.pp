@@ -12,18 +12,10 @@
 #
 class mandrill::config::exim_debian (
     $mail_domain,
-    $required_packages,
     $username,
     $apikey
 ) {
     
-    if $required_packages {
-        package { $required_packages:
-            ensure => "installed",
-            before => Service["exim4"]
-        } 
-    }
-
     file { "mailname":
         path => "/etc/mailname",
         ensure => present,

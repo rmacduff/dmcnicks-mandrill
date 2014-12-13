@@ -47,6 +47,13 @@ class mandrill (
     $apikey
 ) inherits mandrill::params {
 
+    if $required_packages {
+        package { $required_packages:
+            ensure => "installed",
+            before => Class["mandrill::config"]
+        }
+    }
+
     class { "mandrill::config":
         mailer => $mailer,
         mail_domain => $mail_domain,

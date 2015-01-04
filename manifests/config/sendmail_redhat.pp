@@ -10,35 +10,36 @@
 #
 # Copyright 2014 David McNicol
 #
+
 class mandrill::config::sendmail_redhat (
-    $mail_domain,
-    $username,
-    $apikey
+  $mail_domain,
+  $username,
+  $apikey
 ) {
 
-    file { "authinfo":
-        path => "/etc/mail/authinfo",
-        ensure => "present",
-        mode => "0600",
-        content => template("mandrill/sendmail/authinfo.erb")
-    } ->
+  file { 'authinfo':
+    ensure  => 'present',
+    path    => '/etc/mail/authinfo',
+    mode    => '0600',
+    content => template('mandrill/sendmail/authinfo.erb')
+  } ->
 
-    file { "sendmail.mc":
-        path => "/etc/mail/sendmail.mc",
-        ensure => "present",
-        owner => "root",
-        group => "smmsp",
-        mode => "0644",
-        content => template("mandrill/sendmail/sendmail_redhat.mc.erb")
-    } ->
+  file { 'sendmail.mc':
+    ensure  => 'present',
+    path    => '/etc/mail/sendmail.mc',
+    owner   => 'root',
+    group   => 'smmsp',
+    mode    => '0644',
+    content => template('mandrill/sendmail/sendmail_redhat.mc.erb')
+  } ->
 
-    exec { "make":
-        path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ],
-        command => "make",
-        cwd => "/etc/mail",
-    } ~> 
+  exec { 'make':
+    path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
+    command => 'make',
+    cwd     => '/etc/mail',
+  } ~>
 
-    service { "sendmail":
-        ensure => "running"
-    }
+  service { 'sendmail':
+    ensure => 'running'
+  }
 }

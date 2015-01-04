@@ -1,6 +1,6 @@
 {
   "name": "dmcnicks-mandrill",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "dmcnicks",
   "summary": "Configures mail service to use Mandrill as a smarthost.",
   "license": "Apache 2.0",

@@ -28,7 +28,7 @@ class mandrill::config (
 
     'postfix': {
       $mailer_config = 'postfix'
-    },
+    }
 
     'exim': {
 
@@ -36,15 +36,15 @@ class mandrill::config (
 
         'Debian': {
           $mailer_config = 'exim_debian'
-        },
+        }
 
-        default {
+        default: {
           fail("${mailer} on ${::osfamily} not supported")
         }
 
       }
 
-    },
+    }
 
     'sendmail': {
 
@@ -52,21 +52,21 @@ class mandrill::config (
 
         'Debian': {
           $mailer_config = 'sendmail_debian'
-        },
+        }
 
         'RedHat': {
           $mailer_config = 'sendmail_redhat'
-        },
+        }
 
-        default {
+        default: {
           fail("${mailer} on ${::osfamily} not supported")
         }
 
       }
 
-    },
+    }
 
-    default {
+    default: {
       fail("${mailer} on ${::osfamily} not supported")
     }
 

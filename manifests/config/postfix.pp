@@ -17,6 +17,9 @@ class mandrill::config::postfix (
   $apikey
 ) {
 
+  $sasl_passwd = 'hash:/etc/postfix/sasl_passwd'
+  $ca_certificates = '/etc/ssl/certs/ca-certificates.crt'
+
   exec { 'inet_interfaces':
     path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
     command => "postconf -e 'inet_interfaces = 127.0.0.1'"
@@ -42,8 +45,6 @@ class mandrill::config::postfix (
     command => "postconf -e 'smtp_sasl_auth_enable = yes'"
   } ->
 
-  $sasl_passwd = 'hash:/etc/postfix/sasl_passwd'
-
   exec { 'smtp_sasl_password_maps':
     path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
     command => "postconf -e 'smtp_sasl_password_maps = ${sasl_passwd}'"
@@ -58,8 +59,6 @@ class mandrill::config::postfix (
     path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
     command => "postconf -e 'smtp_use_tls = yes'"
   } ->
-
-  $ca_certificates = '/etc/ssl/certs/ca-certificates.crt'
 
   exec { 'smtp_tls_CAfile':
     path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],

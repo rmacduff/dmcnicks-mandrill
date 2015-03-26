@@ -20,6 +20,10 @@ class mandrill::config::postfix (
   $sasl_passwd = 'hash:/etc/postfix/sasl_passwd'
   $ca_certificates = '/etc/ssl/certs/ca-certificates.crt'
 
+  package { 'postfix':
+    ensure => 'present'
+  } ->
+
   exec { 'inet_interfaces':
     path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
     command => "postconf -e 'inet_interfaces = 127.0.0.1'"

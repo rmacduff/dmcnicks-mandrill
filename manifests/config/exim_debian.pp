@@ -17,6 +17,10 @@ class mandrill::config::exim_debian (
   $apikey
 ) {
   
+  package { 'exim4':
+    ensure => 'present'
+  } ->
+
   file { 'mailname':
     ensure  => 'present',
     path    => '/etc/mailname',

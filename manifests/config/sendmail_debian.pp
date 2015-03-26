@@ -17,6 +17,10 @@ class mandrill::config::sendmail_debian (
   $apikey
 ) {
 
+  package { 'sendmail':
+    ensure => 'present'
+  } ->
+
   file { 'authinfo':
     ensure  => 'present',
     path    => '/etc/mail/authinfo',

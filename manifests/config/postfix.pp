@@ -43,9 +43,10 @@ class mandrill::config::postfix (
   }
 
   exec { 'sasl_passwd.db':
-    path    => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
-    command => 'postmap /etc/postfix/sasl_passwd',
-    require => Package['postfix'],
-    notify  => Service['postfix']
+    path        => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
+    command     => 'postmap /etc/postfix/sasl_passwd',
+    refreshonly => true,
+    require     => Package['postfix'],
+    notify      => Service['postfix']
   }
 }

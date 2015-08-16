@@ -18,7 +18,8 @@ class mandrill::config (
   $mail_domain,
   $required_packages,
   $username,
-  $apikey
+  $apikey,
+  $relayhost_port,
 ) {
 
   # Work out whether we have a specific configuration that works for
@@ -79,7 +80,8 @@ class mandrill::config (
     class { "mandrill::config::${mailer_config}":
       mail_domain => $mail_domain,
       username    => $username,
-      apikey      => $apikey
+      apikey      => $apikey,
+      relayhost_port => $relayhost_port,
     }
 
   }

@@ -49,7 +49,8 @@ class mandrill (
   $mail_domain = $mandrill::params::mail_domain,
   $required_packages = $mandrill::params::required_packages,
   $username,
-  $apikey
+  $apikey,
+  $relayhost_port,
 ) inherits mandrill::params {
 
   if $required_packages {
@@ -64,6 +65,7 @@ class mandrill (
     mail_domain       => $mail_domain,
     required_packages => $required_packages,
     username          => $username,
-    apikey            => $apikey
+    apikey            => $apikey,
+    relayhost_port    => $relayhost_port,
   }
 }

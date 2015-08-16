@@ -15,6 +15,7 @@ class mandrill::config::postfix (
   $mail_domain,
   $username,
   $apikey
+  $relayhost_port,
 ) {
 
   package { 'postfix':
